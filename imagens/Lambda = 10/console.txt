@@ -1,0 +1,69 @@
+C:\Users\alden\AppData\Local\Programs\Python\Python313\python.exe "C:\Users\alden\Documents\Faculdade\cadeiras\6º Semestre\reconhecimento de padrões\Lista 02\teste.py" 
+
+=== Treinando modelo de grau 1 ===
+RMSE Treino (sem L2) para grau 1: 4.768923413580319
+RMSE Teste (sem L2) para grau 1: 4.402163231428015
+RMSE Treino (com L2) para grau 1: 5.50301340994667
+RMSE Teste (com L2) para grau 1: 4.28956015171871
+
+=== Treinando modelo de grau 2 ===
+RMSE Treino (sem L2) para grau 2: 2.453123368733414
+RMSE Teste (sem L2) para grau 2: 3.039007450024457
+RMSE Treino (com L2) para grau 2: 4.535875288279761
+RMSE Teste (com L2) para grau 2: 3.8584882122894957
+
+=== Treinando modelo de grau 3 ===
+RMSE Treino (sem L2) para grau 3: 4.773398601698335e-11
+RMSE Teste (sem L2) para grau 3: 169.55606946510505
+RMSE Treino (com L2) para grau 3: 3.805296996809071
+RMSE Teste (com L2) para grau 3: 3.336529736844479
+
+=== Treinando modelo de grau 4 ===
+RMSE Treino (sem L2) para grau 4: 1.8116577721779012e-12
+RMSE Teste (sem L2) para grau 4: 32.064860368232864
+RMSE Treino (com L2) para grau 4: 3.326109345388102
+RMSE Teste (com L2) para grau 4: 3.138487381217637
+
+=== Treinando modelo de grau 5 ===
+RMSE Treino (sem L2) para grau 5: 6.080839623249671e-13
+RMSE Teste (sem L2) para grau 5: 20.43792804016229
+RMSE Treino (com L2) para grau 5: 3.021231880418909
+RMSE Teste (com L2) para grau 5: 3.036272350317338
+
+=== Treinando modelo de grau 6 ===
+RMSE Treino (sem L2) para grau 6: 5.27880621527744e-13
+RMSE Teste (sem L2) para grau 6: 15.259977606533019
+RMSE Treino (com L2) para grau 6: 2.8434396147168712
+RMSE Teste (com L2) para grau 6: 2.971265797039252
+
+=== Treinando modelo de grau 7 ===
+RMSE Treino (sem L2) para grau 7: 4.759925611577276e-13
+RMSE Teste (sem L2) para grau 7: 12.914286655088153
+RMSE Treino (com L2) para grau 7: 2.722001366532547
+RMSE Teste (com L2) para grau 7: 2.9368018569529224
+
+=== Treinando modelo de grau 8 ===
+RMSE Treino (sem L2) para grau 8: 1.0704078399257379e-12
+RMSE Teste (sem L2) para grau 8: 11.719337112384105
+RMSE Treino (com L2) para grau 8: 2.613734333852989
+RMSE Teste (com L2) para grau 8: 2.9221697114815988
+
+=== Treinando modelo de grau 9 ===
+RMSE Treino (sem L2) para grau 9: 1.905147619122725e-12
+RMSE Teste (sem L2) para grau 9: 10.960397995088565
+RMSE Treino (com L2) para grau 9: 2.5044848090001257
+RMSE Teste (com L2) para grau 9: 2.9258322472435943
+
+=== Treinando modelo de grau 10 ===
+RMSE Treino (sem L2) para grau 10: 5.137104481096063e-12
+RMSE Teste (sem L2) para grau 10: 10.413100962451873
+RMSE Treino (com L2) para grau 10: 2.3953044151591647
+RMSE Teste (com L2) para grau 10: 2.9495471420827717
+
+=== Treinando modelo de grau 11 ===
+RMSE Treino (sem L2) para grau 11: 1.250203233877973e-11
+RMSE Teste (sem L2) para grau 11: 10.051919091877382
+RMSE Treino (com L2) para grau 11: 2.2920435907841537
+RMSE Teste (com L2) para grau 11: 2.990960235626098
+
+Process finished with exit code 0
