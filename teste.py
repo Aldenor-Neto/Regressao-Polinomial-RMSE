@@ -3,9 +3,13 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.metrics import mean_squared_error
 
 if not os.path.exists("imagens"):
     os.makedirs("imagens")
+
 
 # Função para normalizar os dados com base no conjunto de treino
 def normalizar_treino(X_train):
@@ -14,32 +18,16 @@ def normalizar_treino(X_train):
     X_train_normalizado = (X_train - min_val) / (max_val - min_val)
     return X_train_normalizado, min_val, max_val
 
+
 def normalizar_teste(X_test, min_val, max_val):
     X_test_normalizado = (X_test - min_val) / (max_val - min_val)
     return X_test_normalizado
 
+
 # Função para calcular o RMSE
 def calcular_rmse(y_true, y_pred):
-    erro_quadratico = np.mean((y_true - y_pred)**2)
-    return np.sqrt(erro_quadratico)
+    return np.sqrt(mean_squared_error(y_true, y_pred))
 
-# Função para calcular os coeficientes beta (sem regularização, com proteção contra matrizes singulares)
-def calcular_coeficientes(X, y, alpha=1e-8):
-    # Adiciona uma coluna de 1s para o termo de bias (intercepto)
-    X_b = np.c_[np.ones((X.shape[0], 1)), X]
-    # Protege contra a singularidade da matriz adicionando um pequeno valor à diagonal
-    XtX = X_b.T.dot(X_b)
-    XtX += np.eye(XtX.shape[0]) * alpha
-    # Calcula os coeficientes beta usando a fórmula dos mínimos quadrados
-    beta = np.linalg.inv(XtX).dot(X_b.T).dot(y)
-    return beta
-
-# Função para criar as características polinomiais
-def gerar_caracteristicas_polinomiais(X, grau):
-    X_poly = X
-    for i in range(2, grau+1):
-        X_poly = np.c_[X_poly, X**i]
-    return X_poly
 
 # Carregar o conjunto de dados
 data = pd.read_csv("boston.csv")
@@ -51,6 +39,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # Normalizar apenas o conjunto de treino e aplicar a mesma escala ao conjunto de teste
 X_train_normalizado, min_val, max_val = normalizar_treino(X_train)
+
 X_test_normalizado = normalizar_teste(X_test, min_val, max_val)
 
 # Listas para armazenar os RMSEs
@@ -59,22 +48,22 @@ test_rmse = []
 train_rmse_ridge = []
 test_rmse_ridge = []
 
-# Treinamento dos modelos de regressão polinomial
+# Treinamento dos modelos de regressão polinomial de ordem 1 a 11, sem e com regularização L2
 for degree in range(1, 12):
     print(f"\n=== Treinando modelo de grau {degree} ===")
 
     # Transformação polinomial
-    X_train_poly = gerar_caracteristicas_polinomiais(X_train_normalizado, degree)
-    X_test_poly = gerar_caracteristicas_polinomiais(X_test_normalizado, degree)
+    poly = PolynomialFeatures(degree)
+    X_train_poly = poly.fit_transform(X_train_normalizado)
+    X_test_poly = poly.transform(X_test_normalizado)
 
     # Regressão Polinomial (sem regularização)
-    beta = calcular_coeficientes(X_train_poly, y_train)
-
-    # Previsão para treino e teste
-    y_train_pred = np.c_[np.ones((X_train_poly.shape[0], 1)), X_train_poly].dot(beta)
-    y_test_pred = np.c_[np.ones((X_test_poly.shape[0], 1)), X_test_poly].dot(beta)
+    model = LinearRegression()
+    model.fit(X_train_poly, y_train)
 
     # Calcular RMSE para treino e teste
+    y_train_pred = model.predict(X_train_poly)
+    y_test_pred = model.predict(X_test_poly)
     train_rmse_value = calcular_rmse(y_train, y_train_pred)
     test_rmse_value = calcular_rmse(y_test, y_test_pred)
     train_rmse.append(train_rmse_value)
@@ -83,24 +72,13 @@ for degree in range(1, 12):
     print(f"RMSE Treino (sem L2) para grau {degree}: {train_rmse_value}")
     print(f"RMSE Teste (sem L2) para grau {degree}: {test_rmse_value}")
 
-    # Regressão Polinomial com Regularização L2
-    # Função para calcular beta com regularização L2
-    def calcular_coeficientes_ridge(X, y, alpha=0.1):
-        # Adiciona uma coluna de 1s para o termo de bias (intercepto)
-        X_b = np.c_[np.ones((X.shape[0], 1)), X]
-        XtX = X_b.T.dot(X_b)
-        XtX += np.eye(XtX.shape[0]) * alpha
-        beta = np.linalg.inv(XtX).dot(X_b.T).dot(y)
-        return beta
-
-    # Calcular coeficientes com regularização L2
-    beta_ridge = calcular_coeficientes_ridge(X_train_poly, y_train, alpha=0.01)
-
-    # Previsão para treino e teste com regularização L2
-    y_train_pred_ridge = np.c_[np.ones((X_train_poly.shape[0], 1)), X_train_poly].dot(beta_ridge)
-    y_test_pred_ridge = np.c_[np.ones((X_test_poly.shape[0], 1)), X_test_poly].dot(beta_ridge)
+    # Regressão Polinomial com Regularização L2 (Ridge Regression)
+    ridge_model = Ridge(alpha=0.01)
+    ridge_model.fit(X_train_poly, y_train)
 
     # Calcular RMSE para treino e teste com L2
+    y_train_pred_ridge = ridge_model.predict(X_train_poly)
+    y_test_pred_ridge = ridge_model.predict(X_test_poly)
     train_rmse_ridge_value = calcular_rmse(y_train, y_train_pred_ridge)
     test_rmse_ridge_value = calcular_rmse(y_test, y_test_pred_ridge)
     train_rmse_ridge.append(train_rmse_ridge_value)
@@ -130,3 +108,4 @@ plt.title("RMSE para Treino e Teste por Grau de Polinômio (com Regularização 
 plt.legend()
 plt.savefig("imagens/rmse_com_regularizacao_l2.png")
 plt.show()
+

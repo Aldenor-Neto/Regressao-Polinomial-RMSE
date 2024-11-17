@@ -88,18 +88,18 @@ A performance dos modelos foi avaliada utilizando o **RMSE** (Raiz Quadrada do E
 | Grau do Polinômio | RMSE Treinamento | RMSE Teste |
 |-------------------|------------------|------------|
 | 1                 | 4.7689           | 4.4022     |
-| 2                 | 2.4531           | 3.0390     |
-| 3                 | 4.7734e-11       | 169.5561   |
-| 4                 | 1.8117e-12       | 32.0649    |
-| 5                 | 6.0808e-13       | 20.4379    |
-| 6                 | 5.2788e-13       | 15.2600    |
-| 7                 | 4.7599e-13       | 12.9143    |
-| 8                 | 1.0704e-12       | 11.7193    |
-| 9                 | 1.9051e-12       | 10.9604    |
-| 10                | 5.1371e-12       | 10.4131    |
-| 11                | 1.2502e-11       | 10.0519    |
+| 2                 | 3.9248           | 3.2657     |
+| 3                 | 3.7518           | 3.2716     |
+| 4                 | 3.5395           | 3.2681     |
+| 5                 | 3.3000           | 3.2189     |
+| 6                 | 3.0747           | 3.1995     |
+| 7                 | 2.9891           | 3.2803     |
+| 8                 | 2.9747           | 3.3855     |
+| 9                 | 2.9485           | 3.3082     |
+| 10                | 2.8885           | 3.1686     |
+| 11                | 2.8260           | 3.0775     |
 
-Observa-se que o overfitting começa a se tornar evidente a partir do grau 3. A partir desse ponto, o RMSE no conjunto de treino sem regularização se aproxima de zero, enquanto o RMSE no conjunto de teste aumenta drasticamente, indicando que o modelo está ajustando ruídos ao invés de padrões reais. Isso se confirma nos graus seguintes, onde o RMSE de treino permanece próximo de zero e o RMSE de teste se estabiliza em valores elevados, caracterizando um sobreajuste severo.
+Observa-se que o overfitting começa a se tornar evidente a partir do grau 3. A partir desse ponto, o RMSE no conjunto de treino diminui de forma expressiva, enquanto o RMSE no conjunto de teste permanece estável ou aumenta levemente, indicando que o modelo está ajustando ruídos ao invés de padrões reais.
 
 ### RMSE com Regularização L2 (lambda = 0,01)
 
@@ -107,19 +107,19 @@ Observa-se que o overfitting começa a se tornar evidente a partir do grau 3. A 
 
 | Grau do Polinômio | RMSE Treinamento | RMSE Teste |
 |-------------------|------------------|------------|
-| 1                 | 4.7689           | 4.4011     |
-| 2                 | 2.5822           | 3.0646     |
-| 3                 | 2.0187           | 2.4092     |
-| 4                 | 1.6258           | 3.1436     |
-| 5                 | 1.3038           | 4.2137     |
-| 6                 | 1.1002           | 4.5990     |
-| 7                 | 0.9572           | 4.6498     |
-| 8                 | 0.8457           | 4.6443     |
-| 9                 | 0.7557           | 4.6788     |
-| 10                | 0.6816           | 4.7489     |
-| 11                | 0.6201           | 4.8755     |
+| 1                 | 4.7689           | 4.4022     |
+| 2                 | 3.9264           | 3.2579     |
+| 3                 | 3.8081           | 3.2002     |
+| 4                 | 3.7649           | 3.2071     |
+| 5                 | 3.7108           | 3.1651     |
+| 6                 | 3.6551           | 3.1199     |
+| 7                 | 3.6116           | 3.0951     |
+| 8                 | 3.5820           | 3.0848     |
+| 9                 | 3.5624           | 3.0783     |
+| 10                | 3.5487           | 3.0702     |
+| 11                | 3.5383           | 3.0596     |
 
-Com a regularização L2, observa-se que o RMSE no conjunto de treino não atinge valores próximos de zero para graus maiores, mantendo-se mais próximo ao RMSE do conjunto de teste. A regularização reduz o efeito de sobreajuste observado na versão sem regularização, porém ainda há indícios de overfitting a partir de polinômios de grau 5, uma vez que o RMSE de teste se estabiliza e não melhora significativamente, enquanto o RMSE de treino continua a diminuir levemente. Isso indica que, apesar da regularização, os modelos de graus mais altos ainda capturam padrões específicos do conjunto de treino que não generalizam bem para o conjunto de teste.
+Com a regularização L2, o overfitting é mitigado significativamente. A regularização penaliza os coeficientes mais elevados, limitando a complexidade do modelo e promovendo um melhor equilíbrio entre os erros de treino e teste. Observa-se que, para os graus mais elevados, os valores de RMSE no conjunto de teste são menores do que na versão sem regularização, destacando a eficácia da regularização para modelos mais complexos.
 
 ### **Fins de Comparação: Análise dos Efeitos de Diferentes Valores de Regularização**
 
@@ -131,47 +131,45 @@ O gráfico gerado a partir desse teste está apresentado na **Figura abaixo**, e
 
 ![RMSE com regularização L2 - lambda = 0.1 ](imagens/Lambda%20=%201/rmse_com_regularizacao_l2.png)
 
-**Tabela 4 - RMSE para diferentes graus do modelo com \( \lambda = 0.1 \):**
+**Tabela  RMSE com \( \lambda = 0.1 \):**
 | Grau do Modelo | RMSE Treino | RMSE Teste |
 |----------------|-------------|------------|
-| 1              | 5.5030      | 4.2896     |
-| 2              | 4.5359      | 3.8585     |
-| 3              | 3.8053      | 3.3365     |
-| 4              | 3.3261      | 3.1385     |
-| 5              | 3.0212      | 3.0363     |
-| 6              | 2.8434      | 2.9713     |
-| 7              | 2.7220      | 2.9368     |
-| 8              | 2.6137      | 2.9222     |
-| 9              | 2.5045      | 2.9258     |
-| 10             | 2.3953      | 2.9495     |
-| 11             | 2.2920      | 2.9910     |
+| 1              | 4.7701      | 4.4029     |
+| 2              | 3.9883      | 3.3003     |
+| 3              | 3.9588      | 3.2710     |
+| 4              | 3.9286      | 3.2883     |
+| 5              | 3.8883      | 3.2934     |
+| 6              | 3.8421      | 3.2820     |
+| 7              | 3.7963      | 3.2626     |
+| 8              | 3.7562      | 3.2425     |
+| 9              | 3.7240      | 3.2256     |
+| 10             | 3.6998      | 3.2126     |
+| 11             | 3.6820      | 3.2030     |
 
 ---
 
 #### **Resultados para \( \lambda = 10 \):**
 Na sequência, foi realizado o mesmo experimento com \( \lambda = 10 \), cujos resultados estão ilustrados na **Figura abaixo** e descritos na tabela seguinte.
 
-**Figura - Gráfico de RMSE com regularização L2 (\( \lambda = 10 \)):**
 ![RMSE com regularização L2 - lambda = 10 ](imagens/Lambda%20=%2010/rmse_com_regularizacao_l2.png)
 
-**Tabela 5 - RMSE para diferentes graus do modelo com \( \lambda = 10 \):**
+**Tabela RMSE com \( \lambda = 10 \):**
 | Grau do Modelo | RMSE Treino | RMSE Teste |
 |----------------|-------------|------------|
-| 1              | 5.5030      | 4.2896     |
-| 2              | 4.5359      | 3.8585     |
-| 3              | 3.8053      | 3.3365     |
-| 4              | 3.3261      | 3.1385     |
-| 5              | 3.0212      | 3.0363     |
-| 6              | 2.8434      | 2.9713     |
-| 7              | 2.7220      | 2.9368     |
-| 8              | 2.6137      | 2.9222     |
-| 9              | 2.5045      | 2.9258     |
-| 10             | 2.3953      | 2.9495     |
-| 11             | 2.2920      | 2.9910     |
+| 1              | 5.6372      | 4.7098     |
+| 2              | 5.2745      | 4.5851     |
+| 3              | 5.1509      | 4.4786     |
+| 4              | 5.1057      | 4.4075     |
+| 5              | 5.0883      | 4.3628     |
+| 6              | 5.0779      | 4.3327     |
+| 7              | 5.0669      | 4.3100     |
+| 8              | 5.0536      | 4.2913     |
+| 9              | 5.0381      | 4.2752     |
+| 10             | 5.0213      | 4.2609     |
+| 11             | 5.0038      | 4.2482     |
 
 #### **Discussão dos Resultados:**
 Ao aumentar \( \lambda \) de 0.1 para 10, observou-se uma diminuição do efeito de overfitting, especialmente em modelos de grau elevado. A regularização mais intensa suprime coeficientes polinomiais excessivos, melhorando a estabilidade dos resultados no conjunto de teste, mas com aumento no erro no conjunto de treino. Essa troca reflete o compromisso entre bias e variância, típico em problemas de regressão com regularização.
-
 
 
 ## Conclusão
